@@ -10,9 +10,25 @@ import simd
 
 /// Loop subdivision algorithm for triangle meshes
 /// Subdivides each triangle into 4 smaller triangles and smooths the mesh
-func LoopSubdivision(iterations: Int) -> SCNNode {
-    // Start with a simple mesh (you can replace this with a loaded mesh)
-    var mesh = createSimpleTetrahedron()
+func LoopSubdivision(iterations: Int, meshType: MeshType = .tetrahedron) -> SCNNode {
+    // Load or create the initial mesh
+    var mesh: Mesh
+    
+    switch meshType {
+    case .tetrahedron:
+        mesh = createSimpleTetrahedron()
+    case .cube:
+        mesh = Mesh()
+        do {
+            try mesh.load(named: "cube", withExtension: "off")
+            mesh.center()
+            mesh.normalize()
+        } catch {
+            print("Error loading cube mesh: \(error)")
+            // Fallback to tetrahedron
+            mesh = createSimpleTetrahedron()
+        }
+    }
     
     // Apply Loop subdivision
     for _ in 0..<iterations {
