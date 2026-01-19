@@ -118,7 +118,6 @@ class BoundingBoxNode {
                 gridIndices.append(idx)
                 gridIndices.append(idx + 1)
             }
-            // Horizontal lines (along X)
             for i in 0...countY {
                 let y = min.y + Float(i) * step
                 if y > max.y + 0.001 { continue }

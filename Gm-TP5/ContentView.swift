@@ -29,7 +29,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Controls
             HStack(spacing: 16) {
                 Picker("", selection: $selectedQuestion) {
                     ForEach(Question.allCases) { q in
@@ -37,10 +36,9 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                
+
                 Spacer()
-                
-                // Mesh selector - only shown for Loop subdivision
+
                 if selectedQuestion == .q2 {
                     Picker("Mesh:", selection: $selectedMesh) {
                         ForEach(MeshType.allCases) { mesh in
@@ -51,20 +49,19 @@ struct ContentView: View {
                     
                     Divider()
                 }
-                
+
                 Stepper(value: $subdivisions, in: 0...8) {
                     Text("Iterations: \(subdivisions)")
                 }
                 .frame(minWidth: 160)
-                
+
                 Divider()
-                
+
                 Toggle("Wire", isOn: $showWire)
                     .toggleStyle(.switch)
             }
             .padding(.horizontal)
 
-            // Preview
             GeometryPreview(
                 geometryBuilder: {
                     switch selectedQuestion {
